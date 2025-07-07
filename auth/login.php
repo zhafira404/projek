@@ -1,11 +1,69 @@
 <?php
 $pageTitle = "Masuk - Dapoer Aisyah";
-require_once 'config/database.php';
+require_once '../config/database.php';
 
+// Start session
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
+// Handle AJAX login requests
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && 
+    (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest' ||
+     strpos($_SERVER['HTTP_ACCEPT'], 'application/json') !== false)) {
+    
+    header('Content-Type: application/json');
+    
+    try {
+        $pdo = getConnection();
+        
+        $email = trim($_POST['email'] ?? '');
+        $password = $_POST['password'] ?? '';
+        
+        if (empty($email) || empty($password)) {
+            echo json_encode(['success' => false, 'message' => 'Email dan password wajib diisi!']);
+            exit;
+        }
+        
+        $stmt = $pdo->prepare("SELECT * FROM users WHERE email = ? AND is_active = 1");
+        $stmt->execute([$email]);
+        $user = $stmt->fetch(PDO::FETCH_ASSOC);
+        
+        if ($user && password_verify($password, $user['password'])) {
+            $_SESSION['user_id'] = $user['id'];
+            $_SESSION['user_name'] = $user['name'];
+            $_SESSION['user_email'] = $user['email'];
+            $_SESSION['user_role'] = $user['role'];
+            
+            // Update last login
+            $stmt = $pdo->prepare("UPDATE users SET last_login = NOW() WHERE id = ?");
+            $stmt->execute([$user['id']]);
+            
+            echo json_encode([
+                'success' => true, 
+                'message' => 'Login berhasil!',
+                'user' => [
+                    'name' => $user['name'],
+                    'email' => $user['email'],
+                    'role' => $user['role']
+                ]
+            ]);
+            exit;
+        } else {
+            echo json_encode(['success' => false, 'message' => 'Email atau password salah!']);
+            exit;
+        }
+        
+    } catch(Exception $e) {
+        echo json_encode(['success' => false, 'message' => $e->getMessage()]);
+        exit;
+    }
+}
+
+// Handle regular form submission
 $error = '';
 $success = '';
 
-// Handle login
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['login'])) {
     try {
         $pdo = getConnection();
@@ -22,7 +80,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['login'])) {
         $user = $stmt->fetch();
         
         if ($user && password_verify($password, $user['password'])) {
-            session_start();
             $_SESSION['user_id'] = $user['id'];
             $_SESSION['user_name'] = $user['name'];
             $_SESSION['user_email'] = $user['email'];
@@ -33,8 +90,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['login'])) {
             $stmt->execute([$user['id']]);
             
             // Redirect ke halaman yang diminta atau dashboard
-            $redirect = $_GET['redirect'] ?? 'index.php';
-            echo "<script>window.location.href = '" . htmlspecialchars($redirect) . "';</script>";
+            $redirect = $_GET['redirect'] ?? '../index.php';
+            header("Location: " . $redirect);
             exit;
         } else {
             throw new Exception('Email atau password salah!');
