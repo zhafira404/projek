@@ -2537,287 +2537,15 @@ section {
 
 /* Reset dan Base Fix untuk Header */
 .header * {
-  box-sizing: border-box;
-}
-
-.header {
-  background: rgba(255, 255, 255, 0.98);
-  backdrop-filter: blur(20px);
-  box-shadow: 0 2px 30px rgba(0, 0, 0, 0.08);
-  position: sticky;
-  top: 0;
-  z-index: 1000;
-  transition: all 0.3s ease;
-  border-bottom: 1px solid rgba(44, 85, 48, 0.1);
-  /* PENTING: Set tinggi tetap */
-  height: 80px;
-  display: flex;
-  align-items: center;
-}
-
-.header-content {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
-  /* PENTING: Hapus padding vertikal, gunakan height dari parent */
-  padding: 0;
-  /* PENTING: Set tinggi penuh */
-  height: 100%;
-}
-
-/* Logo - Perbaikan Khusus */
-.logo {
-  /* PENTING: Set tinggi dan alignment */
-  height: 100%;
-  display: flex;
-  align-items: center;
-}
-
-.logo a {
-  display: flex;
-  align-items: center;
-  text-decoration: none;
-  color: #333;
-  transition: transform 0.3s ease;
-  /* PENTING: Hapus height yang konflik */
-  height: auto;
-  /* PENTING: Pastikan center alignment */
-  align-items: center;
-}
-
-.logo-icon {
-  width: 50px;
-  height: 50px;
-  background: linear-gradient(135deg, #2c5530, #3e7b3e, #4a9d4a);
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: white;
-  font-weight: 800;
-  font-size: 1.2rem;
-  margin-right: 12px;
-  box-shadow: 0 4px 20px rgba(44, 85, 48, 0.3);
-  /* PENTING: Prevent shrinking */
-  flex-shrink: 0;
-  /* PENTING: Remove any margin/padding conflicts */
-  margin-top: 0;
-  margin-bottom: 0;
-}
-
-.logo-text {
-  font-size: 1.8rem;
-  font-weight: 700;
-  background: linear-gradient(135deg, #2c5530, #3e7b3e);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  /* PENTING: Fix line height */
-  line-height: 1;
-  margin: 0;
-  /* PENTING: Prevent text from affecting alignment */
-  display: flex;
-  align-items: center;
-  height: 50px;
-}
-
-/* Navigation - Perbaikan Khusus */
-.nav-desktop {
-  /* PENTING: Set tinggi penuh dan center */
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.nav-list {
-  display: flex;
-  list-style: none;
-  gap: 0.5rem;
-  margin: 0;
-  padding: 0;
-  /* PENTING: Center alignment */
-  align-items: center;
-  /* PENTING: Set tinggi untuk consistency */
-  height: 50px;
-}
-
-.nav-list li {
-  margin: 0;
-  padding: 0;
-  /* PENTING: Ensure vertical centering */
-  display: flex;
-  align-items: center;
-  height: 100%;
-}
-
-.nav-link {
-  text-decoration: none;
-  color: #333;
-  font-weight: 500;
-  font-size: 0.95rem;
-  padding: 0.75rem 1.25rem;
-  border-radius: 25px;
-  transition: all 0.3s ease;
-  position: relative;
-  overflow: hidden;
-  /* PENTING: Consistent height dan alignment */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 40px;
-  line-height: 1;
-  /* PENTING: Prevent text from breaking alignment */
-  white-space: nowrap;
-}
-
-/* Header Actions - Perbaikan Khusus */
-.header-actions {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  /* PENTING: Set tinggi penuh */
-  height: 100%;
-}
-
-/* Search, Cart, Auth Buttons - Perbaikan Seragam */
-.search-toggle,
-.cart-btn,
-.auth-btn,
-.user-btn {
-  /* PENTING: Ukuran seragam */
-  width: 45px;
-  height: 45px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: none;
-  border-radius: 50%;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  /* PENTING: Reset padding yang bisa konflik */
-  padding: 0;
-  /* PENTING: Prevent shrinking */
-  flex-shrink: 0;
-  /* PENTING: Remove any margin */
-  margin: 0;
-}
-
-/* Auth Button - Khusus karena berbeda */
-.auth-btn {
-  background: linear-gradient(135deg, #2c5530, #3e7b3e);
-  color: white;
-  border-radius: 25px;
-  font-weight: 500;
-  font-size: 0.9rem;
-  /* PENTING: Override ukuran untuk button text */
-  width: auto;
-  min-width: 100px;
-  height: 45px;
-  padding: 0 1.5rem;
-  gap: 0.5rem;
-}
-
-.auth-btn span {
-  line-height: 1;
-}
-
-/* User Button - Khusus */
-.user-btn {
-  background: none;
-  color: #333;
-  border-radius: 25px;
-  font-size: 0.9rem;
-  /* PENTING: Override untuk user button */
-  width: auto;
-  min-width: 120px;
-  height: 45px;
-  padding: 0 1rem;
-  gap: 0.5rem;
-}
-
-.user-name {
-  font-weight: 500;
-  max-width: 80px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  line-height: 1;
-}
-
-/* Search dan Cart - Konsisten */
-.search-toggle,
-.cart-btn {
-  background: none;
-  color: #666;
-  font-size: 1.2rem;
-}
-
-.search-toggle:hover,
-.cart-btn:hover {
-  background: rgba(44, 85, 48, 0.1);
-  color: #2c5530;
-}
-
-/* Cart Count */
-.cart-count {
-  position: absolute;
-  top: 8px;
-  right: 8px;
-  background: linear-gradient(135deg, #e74c3c, #c0392b);
-  color: white;
-  font-size: 0.7rem;
-  font-weight: 600;
-  padding: 0.2rem 0.4rem;
-  border-radius: 50%;
-  min-width: 18px;
-  height: 18px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  line-height: 1;
-}
-
-/* Mobile Menu Toggle */
-.mobile-menu-toggle {
-  display: none;
-  background: none;
-  border: none;
-  cursor: pointer;
-  flex-direction: column;
-  gap: 4px;
-  width: 45px;
-  height: 45px;
-  align-items: center;
-  justify-content: center;
-  padding: 0;
-  margin: 0;
-}
-
-.hamburger-line {
-  width: 25px;
-  height: 3px;
-  background: #333;
-  border-radius: 2px;
-  transition: all 0.3s ease;
-}
-
-/* Container Fix */
-.container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 20px;
-  /* PENTING: Ensure container doesn't affect header height */
-  height: 100%;
-  display: flex;
-  align-items: center;
-}
-
-/* Responsive Fixes */
+  /* Responsive Fixes - TAMBAHKAN DI AKHIR FILE */
 @media (max-width: 768px) {
   .header {
     height: 70px;
+  }
+
+  .header-content {
+    height: 70px;
+    min-height: 70px;
   }
 
   .nav-desktop {
@@ -2832,6 +2560,10 @@ section {
     gap: 0.5rem;
   }
 
+  .logo a {
+    height: 40px;
+  }
+
   .logo-icon {
     width: 40px;
     height: 40px;
@@ -2840,26 +2572,27 @@ section {
 
   .logo-text {
     font-size: 1.5rem;
-    height: 40px;
   }
 
   .search-toggle,
   .cart-btn,
-  .auth-btn,
-  .user-btn,
   .mobile-menu-toggle {
     width: 40px;
     height: 40px;
   }
 
   .auth-btn {
+    width: auto;
     min-width: 80px;
+    height: 40px;
     padding: 0 1rem;
     font-size: 0.8rem;
   }
 
   .user-btn {
+    width: auto;
     min-width: 100px;
+    height: 40px;
     padding: 0 0.75rem;
   }
 }
@@ -2869,15 +2602,20 @@ section {
     height: 65px;
   }
 
-  .logo-text {
-    font-size: 1.3rem;
-    height: 35px;
+  .header-content {
+    height: 65px;
+    min-height: 65px;
+    padding: 0.75rem 0;
   }
 
   .logo-icon {
     width: 35px;
     height: 35px;
     font-size: 0.9rem;
+  }
+
+  .logo-text {
+    font-size: 1.3rem;
   }
 
   .search-toggle,
@@ -2888,21 +2626,17 @@ section {
   }
 
   .auth-btn {
+    width: auto;
     min-width: 70px;
     height: 35px;
     font-size: 0.75rem;
+    padding: 0 0.8rem;
   }
 
   .user-btn {
+    width: auto;
     min-width: 90px;
     height: 35px;
+    padding: 0 0.6rem;
   }
 }
-
-/* Debug Helper - Hapus setelah selesai */
-/* 
-.header-content > * {
-  border: 1px solid red;
-}
-*/
-
